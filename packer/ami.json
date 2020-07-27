@@ -38,8 +38,7 @@
       ],
       "run_list": [
         "nginx"
-      ],
-      "chef_license": "accept"
+      ]
     }
   ],
 
