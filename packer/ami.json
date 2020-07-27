@@ -38,7 +38,10 @@
       ],
       "run_list": [
         "nginx"
-      ]
+      ],
+      "client_rb": {
+        "chef_license": "accept"
+      }
     }
   ],
 
