@@ -16,7 +16,7 @@ Resources:
   PipelineBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: "ami-pipeline-bucket"
+      BucketName: "packer-ami-pipeline-bucket"
       VersioningConfiguration:
         Status: "Enabled"
   PipelineBucketPolicy:
@@ -38,6 +38,7 @@ Resources:
             AWS:
               - !GetAtt CodePipelineRole.Arn
               - !GetAtt CodeBuildRole.Arn
+ 
   CodePipelineRole:
     Type: AWS::IAM::Role
     Properties:
@@ -51,23 +52,29 @@ Resources:
               - cloudformation.amazonaws.com
           Action: sts:AssumeRole
       Path: /
-      Policies:
-        -
-          PolicyName: codepipeline-service
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              -
-                Effect: Allow
-                Action:
-                  - "codebuild:*"
-                  - "cloudformation:*"
-                  - "ec2:*"
-                  - "iam:PassRole"
-                Resource: "*" 
+
+  CodePipelinePolicy:
+    Type: AWS::IAM::Policy
+    Properties: 
+      PolicyName: CodePipelinePolicy
+      PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            -
+              Effect: Allow
+              Action:
+                - "codebuild:*"
+                - "cloudformation:*"
+                - "ec2:*"
+                - "iam:PassRole"
+              Resource: "*" 
+      Roles:
+        - Ref: CodePipelineRole
+
   CodeBuildRole:
     Type: AWS::IAM::Role
     Properties:
+      RoleName: CodeBuildRole
       AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
@@ -76,26 +83,31 @@ Resources:
             Service: codebuild.amazonaws.com
           Action: sts:AssumeRole
       Path: /
-      Policies:
-        -
-          PolicyName: packer-ami-codebuild
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              -
-                Effect: Allow
-                Action:
-                  - "ssm:*"
-                  - "ec2:*"
-                  - "cloudformation:DescribeStacks"
-                  - "codepipeline:PutJobSuccessResult"
-                  - "codepipeline:PutJobFailureResult"
-                Resource: "*"
-              -
-                Action:
-                  - "logs:*"
-                Effect: Allow
-                Resource: "arn:aws:logs:*:*:*"
+
+  CodeBuildPolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          -
+            Effect: Allow
+            Action:
+              - "ssm:*"
+              - "ec2:*"
+              - "cloudformation:DescribeStacks"
+              - "codepipeline:PutJobSuccessResult"
+              - "codepipeline:PutJobFailureResult"
+            Resource: "*"
+          -
+            Action:
+              - "logs:*"
+            Effect: Allow
+            Resource: "arn:aws:logs:*:*:*"
+      PolicyName: CodeBuildPolicy
+      Roles:
+        - Ref: CodeBuildRole
+        
   ValidateTemplateProject:
     Type: AWS::CodeBuild::Project
     Properties:

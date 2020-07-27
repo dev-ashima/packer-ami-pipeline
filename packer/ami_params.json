@@ -1,7 +1,7 @@
 {
-  "region": "us-east-1",
+  "region": "us-east-2",
   "source_ami": "ami-b70554c8",
   "ssh_username": "ec2-user",
-  "vpc_id": "vpc-da3c10bc",
-  "subnet_id": "subnet-20dd502f"
+  "vpc_id": "vpc-ab9633c0",
+  "subnet_id": "subnet-1493a86e"
 }
