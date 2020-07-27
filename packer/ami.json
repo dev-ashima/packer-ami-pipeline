@@ -39,7 +39,7 @@
       "run_list": [
         "nginx"
       ],
-      "chef_license ": "accept"
+      "chef_license": "accept"
     }
   ],
 
