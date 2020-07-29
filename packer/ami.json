@@ -32,6 +32,11 @@
 
   "provisioners": [
     {
+      "type": "inspec",
+      "profile": "https://github.com/dev-sec/linux-baseline",
+      "extra_arguments": [ "--chef-license accept"]
+    },
+    {
       "type": "chef-solo",
       "cookbook_paths": [
         "cookbooks"
