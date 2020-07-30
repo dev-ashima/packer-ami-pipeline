@@ -7,11 +7,11 @@ Parameters:
   VpcId:
     Type: String
     Description: VPC to launch instance in
-    Default: vpc-da3c10bc
+    Default: vpc-ab9633c0
   SubnetId:
     Type: String
     Description: Subnet to launch instance in
-    Default: subnet-20dd502f
+    Default: subnet-1493a86e
   KeyName:
     Type: String
     Description: SSH Keypair Name
