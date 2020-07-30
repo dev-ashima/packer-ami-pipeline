@@ -40,8 +40,6 @@
         "nginx"
       ],
       "execute_command": "{{if .Sudo}}sudo {{end}}chef-solo --chef-license accept-silent -c {{.ConfigPath}} -j /tmp/node.json"
-      // "skip_install": false,
-      // "chef_license": "accept-no-persist"
     }
   ],
 
