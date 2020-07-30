@@ -12,7 +12,7 @@ phases:
       - chef gem update
   build:
     commands:
-      - OUTPUTS=$(aws cloudformation describe-stacks --stack-name AMIPipelineTestInstance --output json --region us-east-1 | jq 'reduce .Stacks[0].Outputs[] as $item ({}; . + {"\($item.OutputKey)":$item.OutputValue})')
+      - OUTPUTS=$(aws cloudformation describe-stacks --stack-name AMIPipelineTestInstance --output json --region us-east-2 | jq 'reduce .Stacks[0].Outputs[] as $item ({}; . + {"\($item.OutputKey)":$item.OutputValue})')
       - TestInstanceId=$(echo $OUTPUTS | jq -r '.TestInstanceId')
       - TestInstanceDnsName=$(echo $OUTPUTS | jq -r '.TestInstanceDnsName')
       - AmiId=$(cat cfn/test-instance-config.json | jq -r '.Parameters.AmiId')
